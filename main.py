@@ -1,9 +1,6 @@
-from lxml import html
-import requests
 import xlsxwriter
 import bs4
-from selenium import webdriver
-import time
+from msedge.selenium_tools import Edge,EdgeOptions
 
 excel = xlsxwriter.Workbook("excel.xlsx")
 sheet = excel.add_worksheet()
@@ -11,7 +8,9 @@ sheet.set_default_row(30)
 
 row = 0
 col = 0
-driver = webdriver.Chrome()
+op = EdgeOptions()
+op.use_chromium = True
+driver = Edge(options = op)
 
 bold = excel.add_format({'bold':True})
 sheet.write(row,col,"Sr.No",bold)
@@ -24,7 +23,7 @@ sheet.write(row,col+6,"Answer",bold)
 
 row+=1
 
-for pageEnd in range(214,220):
+for pageEnd in range(1,10):
     driver.get("""https://ssconlineexam.com/general-science-mcq-questions-and-answers-for-competitive-exams&page="""+ str(pageEnd))
     source = driver.page_source
     
